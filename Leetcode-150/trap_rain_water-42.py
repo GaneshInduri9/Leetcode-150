@@ -52,18 +52,19 @@ class Solution:
         leftmax, rightmax = 0, 0
         res = 0
         left, right = 1, len(height)-2
-        while left < right:
-            max_left = max(leftmax, height[left-1])
-            max_right = max(rightmax, height[right+1])
+        while left <= right:
+            leftmax = max(leftmax, height[left-1])
+            rightmax = max(rightmax, height[right+1])
 
             # move the min pointer
-            if max_left <= max_right:
-                if max_left > height[left]:
-                    res += max_left - height[left]
+            if leftmax <= rightmax:
+                if leftmax > height[left]:
+                    res += leftmax - height[left]
                 left += 1
             else:
-                if max_right > height[rightmax]:
-                    res += max_right- height[right]
+                if rightmax > height[right]:
+                    res += rightmax- height[right]
                 right -= 1
+        return res
 
 
