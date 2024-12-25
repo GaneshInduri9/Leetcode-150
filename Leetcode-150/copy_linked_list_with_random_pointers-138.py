@@ -8,15 +8,13 @@
     random_index: the index of the node (range from 0 to n-1) that the random pointer points to, or null if it does not point to any node.
     Your code will only be given the head of the original linked
 """
-
-"""
-# Definition for a Node.
+from typing import Optional
 class Node:
     def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
         self.val = int(x)
         self.next = next
         self.random = random
-"""
+
 
 class Solution:
     """
@@ -93,3 +91,39 @@ class Solution:
 
         return dummy.next
 
+def print_linked_list(head):
+    """ Helper function to print the linked list and its random pointers."""
+    result = []
+    while head:
+        random_val = head.random.val if head.random else None
+        result.append(f"[val: {head.val}, random: {random_val}]")
+        head = head.next
+    return " -> ".join(result)
+
+def main():
+    # Create the nodes
+    node1 = Node(1)
+    node2 = Node(2)
+    node3 = Node(3)
+
+    # Set up the next pointers
+    node1.next = node2
+    node2.next = node3
+
+    # Set up the random pointers
+    node1.random = node3  # 1 -> 3
+    node2.random = node1  # 2 -> 1
+    node3.random = node2  # 3 -> 2
+
+    print("Original linked list:")
+    print(print_linked_list(node1))
+
+    # Make a deep copy using Solution class
+    solution = Solution()
+    copied_head = solution.copyLLwithRandomNode(node1)
+
+    print("\nCopied linked list:")
+    print(print_linked_list(copied_head))
+
+if __name__ == "__main__":
+    main()
