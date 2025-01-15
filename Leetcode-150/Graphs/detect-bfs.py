@@ -33,7 +33,28 @@ class Solution:
                 if detect(i):  # Perform BFS from the node
                     return True
         return False
+    
+    def isCycleDfs(self, V: int, adj: List[List[int]]) -> bool:
+        visited = [0] * V  # Track visited nodes
 
+        def detect(node, parent) -> bool:
+            visited[node] = 1
+            for neighbour in adj[node]:
+                if visited[neighbour] == 0:
+                    if detect(neighbour, node):
+                        return True
+                elif neighbour != parent:
+                    return True
+                
+            return False
+
+        # Check all components of the graph
+        for i in range(V):
+            if visited[i] == 0:  # If the node is unvisited
+                if detect(i,-1):  # Perform BFS from the node
+                    return True
+        return False
+    
 # Helper function to create an adjacency list
 def create_adj_list(edges, V):
     adj = [[] for _ in range(V)]
@@ -48,29 +69,34 @@ V = 3
 adj = create_adj_list(edges, V)
 solution = Solution()
 assert solution.isCycle(V, adj) == True, "Test case 1 failed."
+assert solution.isCycleDfs(V, adj) == True, "Test case 1 failed."
 
 # Test case 2: Graph without a cycle
 edges = [[0, 1], [1, 2]]
 V = 3
 adj = create_adj_list(edges, V)
 assert solution.isCycle(V, adj) == False, "Test case 2 failed."
+assert solution.isCycleDfs(V, adj) == False, "Test case 2 failed."
 
 # Test case 3: Disconnected graph with a cycle
 edges = [[0, 1], [1, 2], [2, 0], [3, 4]]
 V = 5
 adj = create_adj_list(edges, V)
 assert solution.isCycle(V, adj) == True, "Test case 3 failed."
+assert solution.isCycleDfs(V, adj) == True, "Test case 3 failed."
 
 # Test case 4: Empty graph (no edges)
 edges = []
 V = 3
 adj = create_adj_list(edges, V)
 assert solution.isCycle(V, adj) == False, "Test case 4 failed."
+assert solution.isCycleDfs(V, adj) == False, "Test case 4 failed."
 
 # Test case 5: Single node graph (no edges)
 edges = []
 V = 1
 adj = create_adj_list(edges, V)
 assert solution.isCycle(V, adj) == False, "Test case 5 failed."
+assert solution.isCycleDfs(V, adj) == False, "Test case 5 failed."
 
 print("All test cases passed!")
