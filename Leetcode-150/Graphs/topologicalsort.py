@@ -7,6 +7,7 @@
     to stack the most recent completed node will be present on top of stack and the least recent will 
     be at the bottom of the stack. 
 """
+from collections import deque
 class Solution:
     # Function to return list containing vertices in Topological order.
     def topologicalSort(self, adj):
@@ -26,6 +27,32 @@ class Solution:
                 dfs(i)
 
         return stack[::-1]
+    
+    def topologicalSortKahnAlgo(self, adj):
+        V = len(adj)
+        in_degree = [0]*V
+        q = deque()
+
+        for i in range(V):
+            for neighbour in adj[i]:
+                in_degree[neighbour] += 1
+        
+        for i in range(V):
+            if in_degree[i] == 0:
+                q.append(i)
+        topo = []
+        while(q):
+            node = q.popleft()
+            topo.append(node)
+
+            for neigbour in adj[node]:
+                in_degree[neigbour] -= 1
+                if in_degree[neigbour] == 0:
+                    q.append(neigbour)
+                
+        return topo
+
+
 
 
 def test_topological_sort():
