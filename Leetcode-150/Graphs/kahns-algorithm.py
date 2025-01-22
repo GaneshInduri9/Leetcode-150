@@ -30,7 +30,6 @@ class Solution:
         while q:
             node = q.popleft()
             res.append(node)
-            count += 1
 
             # Reduce the indegree of neighbors
             for neighbor in adj[node]:
@@ -39,7 +38,7 @@ class Solution:
                     q.append(neighbor)
 
         # Check for cycles
-        if count != V:
+        if len(res) != V:
             return "Cycle detected, no valid topological order"
         
         return res
