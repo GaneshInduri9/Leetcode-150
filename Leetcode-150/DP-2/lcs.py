@@ -40,12 +40,38 @@ class Solution:
                 else:
                     dp[i][j] = 0 + max(dp[i - 1][j], dp[i][j - 1])
 
-        return dp[n][m]
+        return dp
+
+    def printLcs(self, s, t):
+        n = len(s)
+        m = len(t)
+        dp = self.tabulationLcs(s, t)
+
+        ansL = dp[n][m]
+        ans = [0] * ansL
+
+        i = n
+        j = m
+        ans = []
+
+        while i > 0 and j > 0:
+            if s[i - 1] == t[j - 1]:
+                ans.append(s[i - 1])
+                j -= 1
+                i -= 1
+
+            elif dp[i - 1][j] > dp[i][j - 1]:
+                i = i - 1
+
+            else:
+                j = j - 1
+
+        return "".join(reversed(ans))
 
 
 def test():
     s = Solution()
-    res = s.tabulationLcs("acd", "ced")
+    res = s.printLcs("acd", "ced")
     print(res)
 
 
