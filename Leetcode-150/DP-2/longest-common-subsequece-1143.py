@@ -40,7 +40,28 @@ class Solution:
                 else:
                     dp[i][j] = 0 + max(dp[i - 1][j], dp[i][j - 1])
 
-        return dp[n][m]
+        return dp
+
+    def longestComSubPrint(self, s, t):
+        dp = self.longestCommonSubsequenceTab(s, t)
+
+        i = len(s)
+        j = len(t)
+
+        res = []
+        while i > 0 and j > 0:
+            if s[i - 1] == t[j - 1]:
+                res.append(s[i - 1])
+                i -= 1
+                j -= 1
+
+            else:
+                if dp[i - 1][j] > dp[i][j - 1]:
+                    i -= 1
+                else:
+                    j -= 1
+
+        return "".join(reversed(res))
 
 
 def test():
@@ -50,10 +71,9 @@ def test():
     res1 = sol.longestCommonSubsequence(s1, s2)
     assert res1 == 2, "Test case failed"
 
-    res2 = sol.longestCommonSubsequenceTab(s1, s2)
-    assert res2 == 2, "Test case failed"
+    res3 = sol.longestComSubPrint(s1, s2)
 
-    print("Test case passed")
+    print(res3)
 
 
 if __name__ == "__main__":
