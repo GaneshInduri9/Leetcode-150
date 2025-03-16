@@ -58,11 +58,65 @@ class Solution:
 
         return max(dp)
 
+    def lengthOfLISSpacePrint(self, nums: List[int]) -> int:
+        n = len(nums)
+        dp = [1] * n
+        parent = [-1] * n
+
+        for i in range(n):
+            for j in range(i):
+                if nums[i] > nums[j] and dp[i] < dp[j] + 1:
+                    dp[i] = dp[j] + 1
+                    parent[i] = j
+
+        lis = max(dp)
+        endEle = dp.index(lis)
+
+        lis_sequence = []
+        while endEle != -1:
+            lis_sequence.append(nums[endEle])
+            endEle = parent[endEle]
+
+        print(list(reversed(lis_sequence)))
+
+        return lis
+
+    def lengthOfLISoptimal(self, nums: List[int]) -> int:
+        n = len(nums)
+        temp = []
+        temp.append(nums[0])
+
+        for i in range(1, n):
+            if nums[i] > temp[len(temp) - 1]:
+                temp.append(nums[i])
+            else:
+                idx = self.binarySearch(temp, nums[i])
+                temp[idx] = nums[i]
+        return len(temp)
+
+    def binarySearch(self, temp, key):
+        l = 0
+        h = len(temp) - 1
+
+        while l <= h:
+            mid = l + (h - l) // 2
+
+            if temp[mid] == key:
+                return mid
+
+            elif key > temp[mid]:
+                l = mid + 1
+            else:
+                h = mid - 1
+
+        return h + 1
+
 
 def test():
     sol = Solution()
     arr = [10, 9, 2, 5, 3, 7, 101, 18]
-    res = sol.lengthOfLISDp(arr)
+    res = sol.lengthOfLISoptimal(arr)
+
     print(res)
 
 
