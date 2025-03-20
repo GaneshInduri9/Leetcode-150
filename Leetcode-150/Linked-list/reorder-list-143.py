@@ -1,10 +1,12 @@
 from typing import Optional
 
+
 # Definition for singly-linked list.
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
+
 
 class Solution:
     def reorderList(self, head: Optional[ListNode]) -> None:
@@ -35,11 +37,12 @@ class Solution:
         first, second = head, prev
         while second.next:
             # last node next should be pointed to the second node
-            # so put second.next = first.next 
+            # so put second.next = first.next
             temp1, temp2 = first.next, second.next
             first.next = second
             second.next = temp1
             first, second = temp1, temp2
+
 
 # Helper function to print the linked list
 def printLinkedList(head: Optional[ListNode]) -> None:
@@ -48,6 +51,7 @@ def printLinkedList(head: Optional[ListNode]) -> None:
         print(current.val, end=" -> ")
         current = current.next
     print("None")
+
 
 # Helper function to create a linked list from a list
 def list_to_linked_list(values):
@@ -60,11 +64,12 @@ def list_to_linked_list(values):
         current = current.next
     return head
 
+
 # Test function
 def testReorderList():
     # Create a linked list
     head = list_to_linked_list([1, 2, 3, 4, 5])
-    
+
     print("Original Linked List:")
     printLinkedList(head)
 
@@ -73,6 +78,7 @@ def testReorderList():
 
     print("Reordered Linked List:")
     printLinkedList(head)
+
 
 # Main method
 if __name__ == "__main__":

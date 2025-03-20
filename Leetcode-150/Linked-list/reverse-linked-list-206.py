@@ -1,10 +1,12 @@
 from typing import Optional
 
+
 # Definition for singly-linked list.
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
+
 
 class Solution:
     """
@@ -16,28 +18,28 @@ class Solution:
     - Time Complexity: O(n), as we iterate through the linked list once.
     - Space Complexity: O(1), as no extra data structures are used; reversal is done in-place.
     """
-    
+
     def reverseListBruteForce(self, head: Optional[ListNode]) -> Optional[ListNode]:
         if not head:  # Handle empty list
             return None
-        
+
         # Step 1: Collect all nodes in a list
         nodes = []
         current = head
         while current:
             nodes.append(current)
             current = current.next
-        
+
         # Step 2: Reverse the links using the collected nodes
         for i in range(len(nodes) - 1, 0, -1):
             nodes[i].next = nodes[i - 1]
-        
+
         # Step 3: Set the next reference of the new tail to None
         nodes[0].next = None
 
         # Step 4: Return the new head
         return nodes[-1]
-    
+
     def reverseLinkedList(self, head: Optional[ListNode]) -> Optional[ListNode]:
         """
         Optimal Solution:
@@ -61,12 +63,13 @@ class Solution:
         next = None
 
         while curr:
-            next = curr.next   # Save the next node
-            curr.next = prev   # Reverse the current node's pointer
-            prev = curr        # Move prev to the current node
-            curr = next        # Move curr to the next node
+            next = curr.next  # Save the next node
+            curr.next = prev  # Reverse the current node's pointer
+            prev = curr  # Move prev to the current node
+            curr = next  # Move curr to the next node
 
         return prev  # New head of the reversed list
+
 
 # Helper function to print the linked list
 def printLinkedList(head: Optional[ListNode]):
@@ -75,6 +78,7 @@ def printLinkedList(head: Optional[ListNode]):
         print(current.val, end=" -> ")
         current = current.next
     print("None")
+
 
 # Test function
 def testReverseLinkedList():
@@ -107,6 +111,7 @@ def testReverseLinkedList():
     reversedHeadOptimal = solution.reverseLinkedList(head)
     print("Reversed Linked List (Optimal):")
     printLinkedList(reversedHeadOptimal)
+
 
 # Main method
 if __name__ == "__main__":
